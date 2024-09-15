@@ -1,32 +1,42 @@
 window.onload = function () {
-    // Remove a classe que pausa as animações
+    // Remove a classe que pausa as animações e inicia as flores
     document.body.classList.remove("not-loaded");
 
-    // Inicia o áudio sem autoplay
+    // Inicia o áudio automaticamente quando as flores começam a surgir
     const audio = document.getElementById('background-audio');
     audio.volume = 0.2; // Define o volume inicial
-    audio.play().catch(function (error) {
+
+    // Tenta tocar o áudio automaticamente
+    audio.play().then(() => {
+        console.log("Áudio iniciado automaticamente.");
+    }).catch(function (error) {
         console.log("Autoplay bloqueado. O áudio será iniciado no clique.");
     });
 
     // Se o autoplay for bloqueado, o áudio começará no primeiro toque do usuário
     function startAudio() {
         if (audio.paused) {
-            audio.play();
+            audio.play().then(() => {
+                console.log("Áudio iniciado após interação do usuário.");
+            }).catch((error) => {
+                console.log("Falha ao iniciar o áudio:", error);
+            });
         }
         // Remove o event listener após tocar o áudio
         document.body.removeEventListener('pointerdown', startAudio);
     }
 
+    // Adiciona listener para iniciar o áudio no primeiro toque caso o autoplay seja bloqueado
     document.body.addEventListener('pointerdown', startAudio);
 
-    // Evento para criar estrelas
-    let isDrawing = false;
+    // Variável para controlar se o mouse está pressionado
+    let isMouseDown = false;
 
+    // Função para criar estrelas na posição do mouse ou toque
     function createStars(e) {
-        if (!isDrawing) return;
+        e.preventDefault(); // Evita comportamentos indesejados no toque
 
-        const numStars = 90; // Número de estrelinhas
+        const numStars = 20; // Número de estrelinhas
         const xPos = e.pageX || e.touches?.[0]?.pageX;
         const yPos = e.pageY || e.touches?.[0]?.pageY;
 
@@ -59,7 +69,7 @@ window.onload = function () {
             star.style.setProperty('--color', color);
 
             // Definir o brilho da estrela (glow)
-            star.style.setProperty('--glow', `${color}`);
+            star.style.setProperty('--glow', color);
 
             // Variar a duração da animação (0.6s a 1.2s)
             const duration = Math.random() * 0.6 + 0.6;
@@ -72,24 +82,35 @@ window.onload = function () {
         }
     }
 
-    // Eventos para controlar o início e término da criação das estrelas
-    document.body.addEventListener('pointerdown', (e) => {
-        isDrawing = true;
-        createStars(e);
-    });
-
-    document.body.addEventListener('pointermove', (e) => {
-        if (isDrawing) {
+    // Função que cria estrelas continuamente enquanto o mouse está sendo arrastado
+    function handleMouseMove(e) {
+        if (isMouseDown) {
             createStars(e);
         }
-    });
+    }
 
-    document.body.addEventListener('pointerup', () => {
-        isDrawing = false;
-    });
+    // Função que controla a criação contínua de estrelas enquanto o mouse está pressionado
+    function startCreatingStars(e) {
+        isMouseDown = true;
+        createStars(e); // Cria estrelas ao iniciar o clique
+    }
 
-    // Impede o comportamento padrão do navegador (como seleção de texto e zoom)
-    document.body.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-    });
+    // Função que para a criação de estrelas quando o mouse é solto
+    function stopCreatingStars() {
+        isMouseDown = false;
+    }
+
+    // Evento que captura o mouse down e inicia a criação contínua de estrelas
+    document.body.addEventListener('mousedown', startCreatingStars);
+
+    // Evento para capturar o movimento do mouse enquanto o botão está pressionado
+    document.body.addEventListener('mousemove', handleMouseMove);
+
+    // Evento que captura o mouse up para parar a criação de estrelas
+    document.body.addEventListener('mouseup', stopCreatingStars);
+
+    // Eventos para toque em dispositivos móveis (touchstart, touchmove e touchend)
+    document.body.addEventListener('touchstart', startCreatingStars);
+    document.body.addEventListener('touchmove', handleMouseMove);
+    document.body.addEventListener('touchend', stopCreatingStars);
 };
