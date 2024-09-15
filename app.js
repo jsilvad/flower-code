@@ -24,7 +24,7 @@ window.onload = function () {
     function createStars(e) {
         e.preventDefault(); // Evita comportamentos indesejados no toque
 
-        const numStars = 60; // Número de estrelinhas
+        const numStars = 90; // Número de estrelinhas
         const xPos = e.pageX || e.touches?.[0]?.pageX;
         const yPos = e.pageY || e.touches?.[0]?.pageY;
 
@@ -39,7 +39,7 @@ window.onload = function () {
 
             // Gera uma posição de destino aleatória para cada estrela
             const angle = Math.random() * 360; // Direção aleatória
-            const distance = Math.random() * 120 + 50; // Distância aleatória
+            const distance = Math.random() * 140 + 60; // Distância aleatória
             const x = Math.cos(angle) * distance;
             const y = Math.sin(angle) * distance;
 
@@ -48,7 +48,7 @@ window.onload = function () {
             star.style.setProperty('--y', `${y}px`);
 
             // Variar o tamanho das estrelas (de 4px a 10px)
-            const size = Math.random() * 6 + 4;
+            const size = Math.random() * 10 + 8;
             star.style.setProperty('--size', `${size}px`);
 
             // Variar as cores das estrelas
