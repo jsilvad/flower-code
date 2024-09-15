@@ -9,24 +9,33 @@ window.onload = function () {
         console.log("Autoplay bloqueado. O áudio será iniciado no clique.");
     });
 
-    // Se o autoplay for bloqueado, o áudio começará no primeiro clique do usuário
-    document.body.addEventListener('click', function () {
+    // Se o autoplay for bloqueado, o áudio começará no primeiro toque do usuário
+    function startAudio() {
         if (audio.paused) {
             audio.play();
         }
-    });
+        // Remove o event listener após tocar o áudio
+        document.body.removeEventListener('pointerdown', startAudio);
+    }
 
-    // Evento de clique para criar estrelas
-    document.body.addEventListener('click', function (e) {
+    document.body.addEventListener('pointerdown', startAudio);
+
+    // Evento para criar estrelas
+    function createStars(e) {
+        e.preventDefault(); // Evita comportamentos indesejados no toque
+
         const numStars = 60; // Número de estrelinhas
+        const xPos = e.pageX || e.touches?.[0]?.pageX;
+        const yPos = e.pageY || e.touches?.[0]?.pageY;
+
         for (let i = 0; i < numStars; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             document.body.appendChild(star);
 
-            // Defina a posição inicial como o ponto de clique
-            star.style.left = `${e.pageX}px`;
-            star.style.top = `${e.pageY}px`;
+            // Defina a posição inicial como o ponto de clique/toque
+            star.style.left = `${xPos}px`;
+            star.style.top = `${yPos}px`;
 
             // Gera uma posição de destino aleatória para cada estrela
             const angle = Math.random() * 360; // Direção aleatória
@@ -59,5 +68,8 @@ window.onload = function () {
                 star.remove();
             }, duration * 1000); // Remover baseado na duração
         }
-    });
+    }
+
+    // Adiciona o event listener para 'pointerdown'
+    document.body.addEventListener('pointerdown', createStars);
 };
