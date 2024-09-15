@@ -20,14 +20,13 @@ window.onload = function () {
 
     document.body.addEventListener('pointerdown', startAudio);
 
-    // Variável para controlar se o mouse está pressionado
-    let isMouseDown = false;
+    // Evento para criar estrelas
+    let isDrawing = false;
 
-    // Função para criar estrelas na posição do mouse ou toque
     function createStars(e) {
-        e.preventDefault(); // Evita comportamentos indesejados no toque
+        if (!isDrawing) return;
 
-        const numStars = 20; // Número de estrelinhas
+        const numStars = 90; // Número de estrelinhas
         const xPos = e.pageX || e.touches?.[0]?.pageX;
         const yPos = e.pageY || e.touches?.[0]?.pageY;
 
@@ -60,7 +59,7 @@ window.onload = function () {
             star.style.setProperty('--color', color);
 
             // Definir o brilho da estrela (glow)
-            star.style.setProperty('--glow', color);
+            star.style.setProperty('--glow', `${color}`);
 
             // Variar a duração da animação (0.6s a 1.2s)
             const duration = Math.random() * 0.6 + 0.6;
@@ -73,35 +72,24 @@ window.onload = function () {
         }
     }
 
-    // Função que cria estrelas continuamente enquanto o mouse está sendo arrastado
-    function handleMouseMove(e) {
-        if (isMouseDown) {
+    // Eventos para controlar o início e término da criação das estrelas
+    document.body.addEventListener('pointerdown', (e) => {
+        isDrawing = true;
+        createStars(e);
+    });
+
+    document.body.addEventListener('pointermove', (e) => {
+        if (isDrawing) {
             createStars(e);
         }
-    }
+    });
 
-    // Função que controla a criação contínua de estrelas enquanto o mouse está pressionado
-    function startCreatingStars(e) {
-        isMouseDown = true;
-        createStars(e); // Cria estrelas ao iniciar o clique
-    }
+    document.body.addEventListener('pointerup', () => {
+        isDrawing = false;
+    });
 
-    // Função que para a criação de estrelas quando o mouse é solto
-    function stopCreatingStars() {
-        isMouseDown = false;
-    }
-
-    // Evento que captura o mouse down e inicia a criação contínua de estrelas
-    document.body.addEventListener('mousedown', startCreatingStars);
-
-    // Evento para capturar o movimento do mouse enquanto o botão está pressionado
-    document.body.addEventListener('mousemove', handleMouseMove);
-
-    // Evento que captura o mouse up para parar a criação de estrelas
-    document.body.addEventListener('mouseup', stopCreatingStars);
-
-    // Eventos para toque em dispositivos móveis (touchstart, touchmove e touchend)
-    document.body.addEventListener('touchstart', startCreatingStars);
-    document.body.addEventListener('touchmove', handleMouseMove);
-    document.body.addEventListener('touchend', stopCreatingStars);
+    // Impede o comportamento padrão do navegador (como seleção de texto e zoom)
+    document.body.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+    });
 };

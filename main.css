@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+* {
+  user-select: none;
+  -webkit-user-select: none; /* iOS Safari */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  touch-action: none; /* Prevenir comportamentos padrões de toque */
+}
+
 :root {
   --dark-color: #000;
 }
