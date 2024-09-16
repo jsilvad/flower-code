@@ -2,7 +2,7 @@ window.onload = function () {
     const phrases = [
         'SARA, VOCÊ É LINDA!',
         'SARA, VOCÊ É INCRÍVEL!',
-        'SARA, VOCÊ É MUITO INTELIGENTE!',
+        'SARA, VOCÊ É MUITO FOFA!',
         'SARA, VOCÊ É MARAVILHOSA!',
         'VAMO TOMAR UMA COMIGO? ass. Jeff',
     ];
