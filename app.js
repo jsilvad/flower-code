@@ -4,6 +4,8 @@ window.onload = function () {
         'SARA, VOCÊ É INCRÍVEL!',
         'SARA, VOCÊ É MUITO FOFA!',
         'SARA, VOCÊ É MARAVILHOSA!',
+        'SARA, VOCÊ É A MELHOR!',
+        'SARA, VOCÊ É BRILHANTE!',
         'VAMO TOMAR UMA COMIGO? ass. Jeff',
     ];
 
