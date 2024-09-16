@@ -1225,7 +1225,7 @@ body {
 }
 
 .name-letter {
-  font-size: 8vmin;
+  font-size: 6vmin;
   font-weight: bold;
   color: #6bf0ff; /* Mesma cor das flores */
   opacity: 0;
