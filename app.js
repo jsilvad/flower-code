@@ -1,4 +1,30 @@
 window.onload = function () {
+    const phrases = [
+        'SARA, VOCÊ É LINDA!',
+        'SARA, VOCÊ É INCRÍVEL!',
+        'SARA, VOCÊ É MUITO INTELIGENTE!',
+        'SARA, VOCÊ É MARAVILHOSA!',
+        'VAMO TOMAR UMA COMIGO? ass. Jeff',
+    ];
+
+    // Seleciona uma frase aleatória
+    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
+    // Seleciona o container de letras
+    const nameContainer = document.querySelector('.name-container');
+
+    // Limpa o conteúdo anterior
+    nameContainer.innerHTML = '';
+
+    // Adiciona cada letra da frase como um span individual
+    randomPhrase.split('').forEach((letter, index) => {
+        const span = document.createElement('span');
+        span.classList.add('name-letter');
+        span.style.setProperty('--i', index + 1);
+        span.textContent = letter;
+        nameContainer.appendChild(span);
+    });
+
     // Remove a classe que pausa as animações e inicia as flores
     document.body.classList.remove("not-loaded");
 
