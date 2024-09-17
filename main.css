@@ -1219,9 +1219,11 @@ body {
   top: 10vmin;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 2vmin;
+  display: inline-block; /* Centraliza e permite quebras de linha */
+  text-align: center; /* Alinha o texto no centro */
   font-family: "Indie Flower", cursive;
+  max-width: 90vw; /* Limita a largura máxima para forçar quebras de linha */
+  word-wrap: break-word; /* Permite quebra de palavras se necessário */
 }
 
 .name-letter {

@@ -7,7 +7,10 @@ window.onload = function () {
         'SARA, VOCÊ É A MELHOR!',
         'SARA, VOCÊ É BRILHANTE!',
         'VAMO TOMAR UMA COMIGO? ass. Jeff',
+        'ESTOU AGUARDANDO NOSSO FILME HEIN...',
     ];
+
+
 
     // Seleciona uma frase aleatória
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
@@ -22,7 +25,7 @@ window.onload = function () {
     randomPhrase.split('').forEach((letter, index) => {
         const span = document.createElement('span');
         span.classList.add('name-letter');
-        span.style.setProperty('--i', index + 1);
+        span.style.setProperty('--i', (index + 1) / 2);
         span.textContent = letter;
         nameContainer.appendChild(span);
     });
